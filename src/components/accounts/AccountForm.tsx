@@ -36,7 +36,7 @@ export const AccountForm: React.FC = () => {
     const [type, setType] = useState<AccountType>(AccountType.CARD);
     const [currency, setCurrency] = useState<Currency | null>(null);
     const [bank, setBank] = useState<Bank | null>(null);
-    const [creditLimit, setCreditLimit] = useState('0');
+    const [creditLimit, setCreditLimit] = useState('');
     const [currentBalance, setCurrentBalance] = useState('0');
     const [includeInTotal, setIncludeInTotal] = useState(true);
     const [defaultAccount, setDefaultAccount] = useState(false);
@@ -65,9 +65,9 @@ export const AccountForm: React.FC = () => {
                     setName(acc.name);
                     setType(acc.type);
                     setCurrency(acc.currency);
-                    setBank(acc.bank);
-                    setCreditLimit(String(acc.creditLimit || 0));
-                    setCurrentBalance(String(acc.currentBalance || 0));
+                    setBank(acc.bank ? bankList.find(b => b.id === acc.bank!.id) || null : null);
+                    setCreditLimit(acc.creditLimit || '');
+                    setCurrentBalance(acc.currentBalance || '0');
                     setIncludeInTotal(acc.includeInTotalBalance);
                     setDefaultAccount(acc.defaultAccount);
                     setSavingsAccount(acc.savingsAccount);
@@ -95,8 +95,8 @@ export const AccountForm: React.FC = () => {
             type,
             currency: {id: currency?.id || ''},
             bank: bank ? {id: bank.id} : null,
-            creditLimit: parseFloat(creditLimit) || 0,
-            currentBalance: parseFloat(currentBalance) || 0,
+            creditLimit: creditLimit || null,
+            currentBalance: currentBalance || '0',
             includeInTotalBalance: includeInTotal,
             defaultAccount,
             savingsAccount,

@@ -8,3 +8,7 @@ export interface SimplePlace {
     id: string;
     description: string;
 }
+
+export interface SearchPlace extends SimplePlace {
+    isOwned: boolean;
+}

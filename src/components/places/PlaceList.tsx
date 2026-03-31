@@ -13,14 +13,14 @@ import {
     Typography,
 } from '@mui/material';
 import {Add as AddIcon, Delete as DeleteIcon, Search as SearchIcon} from '@mui/icons-material';
-import {SimplePlace} from '../../models/Place';
+import {SearchPlace} from '../../models/Place';
 import {deletePlace, searchPlaces} from '../../service/api/placeApi';
 import {useSnackbar} from 'notistack';
 
 export const PlaceList: React.FC = () => {
     const navigate = useNavigate();
     const {enqueueSnackbar} = useSnackbar();
-    const [places, setPlaces] = useState<SimplePlace[]>([]);
+    const [places, setPlaces] = useState<SearchPlace[]>([]);
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -105,13 +105,15 @@ export const PlaceList: React.FC = () => {
                             <Typography variant="body1" sx={{flex: 1}}>
                                 {place.description}
                             </Typography>
-                            <IconButton
-                                size="small"
-                                onClick={(e) => handleDelete(e, place.id)}
-                                color="error"
-                            >
-                                <DeleteIcon fontSize="small"/>
-                            </IconButton>
+                            {place.isOwned && (
+                                <IconButton
+                                    size="small"
+                                    onClick={(e) => handleDelete(e, place.id)}
+                                    color="error"
+                                >
+                                    <DeleteIcon fontSize="small"/>
+                                </IconButton>
+                            )}
                         </CardContent>
                     </Card>
                 ))

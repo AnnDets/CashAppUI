@@ -1,9 +1,8 @@
-import {Color, Icon, IdDTO} from './Config';
+import {Color, Icon, IdDTO, NameDTO} from './Config';
 
 export interface Category {
     id: string;
     name: string;
-    author: { id: string };
     forIncome: boolean;
     forOutcome: boolean;
     mandatoryOutcome: boolean;
@@ -17,7 +16,7 @@ export interface CategoryInput {
     forOutcome: boolean;
     mandatoryOutcome: boolean;
     icon: IdDTO | null;
-    color: IdDTO | null;
+    color: NameDTO | null;
 }
 
 export interface ListCategory {
@@ -33,4 +32,5 @@ export interface SimpleCategory {
     id: string;
     name: string;
     color: Color | null;
+    icon: Icon | null;
 }

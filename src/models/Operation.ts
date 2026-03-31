@@ -30,8 +30,8 @@ export interface ListOperation {
     operationDate: string;
     description: string;
     place: SimplePlace | null;
-    income: number;
-    outcome: number;
+    income: string | null;
+    outcome: string | null;
     created: string;
     updated: string;
 }
@@ -44,8 +44,8 @@ export interface SimpleOperation {
     operationDate: string;
     description: string;
     place: SimplePlace | null;
-    income: number;
-    outcome: number;
+    income: string | null;
+    outcome: string | null;
     created: string;
     updated: string;
 }

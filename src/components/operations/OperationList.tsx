@@ -186,14 +186,14 @@ export const OperationList: React.FC = () => {
                                     </Box>
                                     <Box sx={{display: 'flex', alignItems: 'center', gap: 0.5}}>
                                         <Box sx={{textAlign: 'right'}}>
-                                            {op.income > 0 && (
+                                            {op.income && parseFloat(op.income) > 0 && (
                                                 <Typography variant="body2" color="success.main" fontWeight="bold">
-                                                    +{op.income.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                                                    +{parseFloat(op.income).toLocaleString(undefined, {minimumFractionDigits: 2})}
                                                 </Typography>
                                             )}
-                                            {op.outcome > 0 && (
+                                            {op.outcome && parseFloat(op.outcome) > 0 && (
                                                 <Typography variant="body2" color="error.main" fontWeight="bold">
-                                                    -{op.outcome.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                                                    -{parseFloat(op.outcome).toLocaleString(undefined, {minimumFractionDigits: 2})}
                                                 </Typography>
                                             )}
                                         </Box>

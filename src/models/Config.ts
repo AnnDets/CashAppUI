@@ -2,6 +2,10 @@ export interface IdDTO {
     id: string;
 }
 
+export interface NameDTO {
+    name: string;
+}
+
 export interface Bank {
     id: string;
     country: string;
@@ -15,7 +19,7 @@ export interface SimpleBank {
 }
 
 export interface Color {
-    id: string;
+    name: string;
     red: number;
     green: number;
     blue: number;

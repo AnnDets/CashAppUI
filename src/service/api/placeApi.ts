@@ -1,10 +1,10 @@
 import api from '../ApiClient';
-import {SimplePlace} from '../../models/Place';
+import {SearchPlace, SimplePlace} from '../../models/Place';
 
 const BASE = '/api/v1/places';
 
 export const searchPlaces = (search: string) =>
-    api.get<SimplePlace[]>(`${BASE}/search`, {params: {search}}).then(r => r.data);
+    api.get<SearchPlace[]>(`${BASE}/search`, {params: {search}}).then(r => r.data);
 
 export const createPlace = (data: SimplePlace) =>
     api.post<SimplePlace>(BASE, data).then(r => r.data);

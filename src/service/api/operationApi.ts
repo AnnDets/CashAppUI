@@ -12,6 +12,9 @@ export const filterOperations = (filter: OperationFilterDTO) =>
 export const createOperation = (data: OperationInput) =>
     api.post<SimpleOperation>(BASE, data).then(r => r.data);
 
+export const bulkCreateOperations = (data: OperationInput[]) =>
+    api.post<SimpleOperation[]>(`${BASE}/bulk`, data).then(r => r.data);
+
 export const updateOperation = (id: string, data: OperationInput) =>
     api.patch<SimpleOperation>(`${BASE}/${id}`, data).then(r => r.data);
 

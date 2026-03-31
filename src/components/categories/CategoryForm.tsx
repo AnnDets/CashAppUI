@@ -60,7 +60,7 @@ export const CategoryForm: React.FC = () => {
             forOutcome,
             mandatoryOutcome,
             icon: selectedIcon ? {id: selectedIcon.id} : null,
-            color: selectedColor ? {id: selectedColor.id} : null,
+            color: selectedColor ? {name: selectedColor.name} : null,
         };
 
         try {
@@ -113,7 +113,7 @@ export const CategoryForm: React.FC = () => {
                         </Box>
                     )}
                     renderInput={params => <TextField {...params} label="Color" margin="normal"/>}
-                    isOptionEqualToValue={(opt, val) => opt.id === val.id}
+                    isOptionEqualToValue={(opt, val) => opt.name === val.name}
                 />
 
                 <Autocomplete

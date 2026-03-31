@@ -1,4 +1,4 @@
-import {Bank, Currency, IdDTO} from './Config';
+import {Currency, IdDTO, SimpleBank} from './Config';
 
 export enum AccountType {
     CASH = 'CASH',
@@ -13,11 +13,11 @@ export interface Account {
     name: string;
     type: AccountType;
     currency: Currency;
-    creditLimit: number;
-    currentBalance: number;
+    creditLimit: string | null;
+    currentBalance: string;
     includeInTotalBalance: boolean;
     defaultAccount: boolean;
-    bank: Bank | null;
+    bank: SimpleBank | null;
     cardNumber1: string | null;
     cardNumber2: string | null;
     cardNumber3: string | null;
@@ -30,8 +30,8 @@ export interface AccountInput {
     name: string;
     type: AccountType;
     currency: IdDTO;
-    creditLimit: number;
-    currentBalance: number;
+    creditLimit: string | null;
+    currentBalance: string;
     includeInTotalBalance: boolean;
     defaultAccount: boolean;
     bank: IdDTO | null;
@@ -48,8 +48,8 @@ export interface ListAccount {
     name: string;
     type: AccountType;
     currency: Currency;
-    creditLimit: number;
-    currentBalance: number;
+    creditLimit: string | null;
+    currentBalance: string;
     bankIcon: string | null;
     savingsAccount: boolean;
     archiveAccount: boolean;

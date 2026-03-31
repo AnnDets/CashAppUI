@@ -15,7 +15,7 @@ import {
 import {OperationInput, OperationType} from '../../models/Operation';
 import {ListAccount} from '../../models/Account';
 import {ListCategory} from '../../models/Category';
-import {SimplePlace} from '../../models/Place';
+import {SearchPlace} from '../../models/Place';
 import {getAccounts} from '../../service/api/accountApi';
 import {getCategories} from '../../service/api/categoryApi';
 import {searchPlaces} from '../../service/api/placeApi';
@@ -40,7 +40,7 @@ export const OperationForm: React.FC = () => {
 
     const [accounts, setAccounts] = useState<ListAccount[]>([]);
     const [categories, setCategories] = useState<ListCategory[]>([]);
-    const [places, setPlaces] = useState<SimplePlace[]>([]);
+    const [places, setPlaces] = useState<SearchPlace[]>([]);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
@@ -167,7 +167,7 @@ export const OperationForm: React.FC = () => {
                     >
                         {accounts.map(a => (
                             <MenuItem key={a.id} value={a.id}>
-                                {a.name} ({a.currentBalance.toLocaleString()} {a.currency?.symbol || ''})
+                                {a.name} ({Number(a.currentBalance).toLocaleString()} {a.currency?.symbol || ''})
                             </MenuItem>
                         ))}
                     </TextField>
@@ -185,7 +185,7 @@ export const OperationForm: React.FC = () => {
                     >
                         {accounts.map(a => (
                             <MenuItem key={a.id} value={a.id}>
-                                {a.name} ({a.currentBalance.toLocaleString()} {a.currency?.symbol || ''})
+                                {a.name} ({Number(a.currentBalance).toLocaleString()} {a.currency?.symbol || ''})
                             </MenuItem>
                         ))}
                     </TextField>
