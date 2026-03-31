@@ -23,6 +23,8 @@ export const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
@@ -53,10 +55,16 @@ export const LoginPage: React.FC = () => {
         }
         setLoading(true);
         try {
-            await registerUser({email, username, password});
+            await registerUser({email, username, password, firstName, lastName});
             await loginWithCredentials(email, password);
         } catch (err: any) {
-            setError(err?.response?.data?.message || 'Registration failed. Please try again.');
+            const status = err?.response?.status;
+            const message = err?.response?.data?.message;
+            if (status === 400 && message?.includes('already exists')) {
+                setError('User with this email or username already exists');
+            } else {
+                setError(message || 'Registration failed. Please try again.');
+            }
         }
         setLoading(false);
     };
@@ -135,6 +143,24 @@ export const LoginPage: React.FC = () => {
                             margin="normal"
                             required
                             autoComplete="username"
+                        />
+                        <TextField
+                            fullWidth
+                            label="First Name"
+                            value={firstName}
+                            onChange={e => setFirstName(e.target.value)}
+                            margin="normal"
+                            required
+                            autoComplete="given-name"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Last Name"
+                            value={lastName}
+                            onChange={e => setLastName(e.target.value)}
+                            margin="normal"
+                            required
+                            autoComplete="family-name"
                         />
                         <TextField
                             fullWidth

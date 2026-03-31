@@ -106,6 +106,7 @@ export const KeycloakProvider: React.FC<KeycloakProviderProps> = ({children}) =>
                     onLoad: 'check-sso',
                     pkceMethod: 'S256',
                     checkLoginIframe: false,
+                    redirectUri: window.location.origin + '/app/',
                 };
 
                 if (storedToken) {
@@ -129,6 +130,16 @@ export const KeycloakProvider: React.FC<KeycloakProviderProps> = ({children}) =>
                 clearTokens();
                 setIsAuthenticated(false);
             }
+
+            // After Keycloak init, ensure we're on /app path for BrowserRouter
+            if (!window.location.pathname.startsWith('/app')) {
+                window.history.replaceState({}, '', '/app/');
+            }
+            // Clean up Keycloak hash fragments (#iss=..., #error=...)
+            if (window.location.hash && (window.location.hash.includes('iss=') || window.location.hash.includes('error='))) {
+                window.history.replaceState({}, '', window.location.pathname + window.location.search);
+            }
+
             setIsLoading(false);
         };
 
