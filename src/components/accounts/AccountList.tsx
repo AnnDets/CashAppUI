@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Alert, Box, Card, CardContent, Chip, Fab, IconButton, Skeleton, Typography,} from '@mui/material';
-import {Add as AddIcon, Delete as DeleteIcon} from '@mui/icons-material';
+import {Alert, Avatar, Box, Card, CardContent, Chip, Fab, IconButton, Skeleton, Typography,} from '@mui/material';
+import {AccountBalance as BankIcon, Add as AddIcon, Delete as DeleteIcon} from '@mui/icons-material';
 import {AccountType, ListAccount} from '../../models/Account';
 import {deleteAccount, getAccounts} from '../../service/api/accountApi';
 
@@ -74,10 +74,21 @@ export const AccountList: React.FC = () => {
                     <Card key={account.id} sx={{mb: 1}}>
                         <CardContent
                             sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 1.5}}>
-                            <Box
-                                sx={{flex: 1, cursor: 'pointer'}}
-                                onClick={() => navigate(`/accounts/${account.id}`)}
-                            >
+                            <Box sx={{display: 'flex', alignItems: 'center', gap: 1.5, flex: 1, minWidth: 0}}>
+                                <Avatar
+                                    sx={{bgcolor: 'grey.200', width: 40, height: 40}}
+                                    variant="rounded"
+                                >
+                                    {account.bankIcon ? (
+                                        <img src={account.bankIcon} alt="" width={24} height={24}/>
+                                    ) : (
+                                        <BankIcon sx={{color: 'grey.600'}}/>
+                                    )}
+                                </Avatar>
+                                <Box
+                                    sx={{flex: 1, cursor: 'pointer', minWidth: 0}}
+                                    onClick={() => navigate(`/accounts/${account.id}`)}
+                                >
                                 <Typography variant="body1" fontWeight="medium">
                                     {account.name}
                                     {account.savingsAccount && (
@@ -93,6 +104,7 @@ export const AccountList: React.FC = () => {
                                     variant="outlined"
                                     sx={{mt: 0.5}}
                                 />
+                                </Box>
                             </Box>
                             <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
                                 <Box

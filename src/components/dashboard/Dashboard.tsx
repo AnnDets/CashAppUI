@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Alert, Box, Card, CardActionArea, CardContent, Chip, Divider, Fab, Skeleton, Typography,} from '@mui/material';
-import {Add as AddIcon} from '@mui/icons-material';
+import {Alert, Avatar, Box, Card, CardActionArea, CardContent, Chip, Divider, Fab, Skeleton, Typography,} from '@mui/material';
+import {AccountBalance as BankIcon, Add as AddIcon} from '@mui/icons-material';
 import {AccountType, ListAccount} from '../../models/Account';
 import {ListOperation} from '../../models/Operation';
+import {colorToHex} from '../../models/Config';
 import {getAccounts} from '../../service/api/accountApi';
 import {getOperations} from '../../service/api/operationApi';
 import {format, parseISO} from 'date-fns';
@@ -101,7 +102,18 @@ export const Dashboard: React.FC = () => {
                         <CardActionArea onClick={() => navigate(`/accounts/${account.id}`)}>
                             <CardContent
                                 sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 1.5}}>
-                                <Box>
+                                <Box sx={{display: 'flex', alignItems: 'center', gap: 1.5}}>
+                                    <Avatar
+                                        sx={{bgcolor: 'grey.200', width: 36, height: 36}}
+                                        variant="rounded"
+                                    >
+                                        {account.bankIcon ? (
+                                            <img src={account.bankIcon} alt="" width={22} height={22}/>
+                                        ) : (
+                                            <BankIcon sx={{color: 'grey.600', fontSize: 20}}/>
+                                        )}
+                                    </Avatar>
+                                    <Box>
                                     <Typography variant="body1" fontWeight="medium">
                                         {account.name}
                                     </Typography>
@@ -111,6 +123,7 @@ export const Dashboard: React.FC = () => {
                                         variant="outlined"
                                         sx={{mt: 0.5}}
                                     />
+                                    </Box>
                                 </Box>
                                 <Box sx={{textAlign: 'right'}}>
                                     <Typography
@@ -149,7 +162,23 @@ export const Dashboard: React.FC = () => {
                     <Card key={op.id} sx={{mb: 1}}>
                         <CardContent
                             sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 1.5}}>
-                            <Box>
+                            <Box sx={{display: 'flex', alignItems: 'center', gap: 1.5}}>
+                                <Avatar
+                                    sx={{
+                                        bgcolor: op.category?.color ? colorToHex(op.category.color) : 'grey.400',
+                                        width: 32,
+                                        height: 32,
+                                    }}
+                                >
+                                    {op.category?.icon?.data ? (
+                                        <img src={op.category.icon.data} alt="" width={18} height={18}/>
+                                    ) : (
+                                        <Typography variant="caption" sx={{color: 'white'}}>
+                                            {(op.category?.name || '?').charAt(0).toUpperCase()}
+                                        </Typography>
+                                    )}
+                                </Avatar>
+                                <Box>
                                 <Typography variant="body2" fontWeight="medium">
                                     {op.category?.name || 'No category'}
                                 </Typography>
@@ -157,6 +186,7 @@ export const Dashboard: React.FC = () => {
                                     {op.operationDate ? format(parseISO(op.operationDate), 'MMM d, yyyy') : ''}
                                     {op.description ? ` - ${op.description}` : ''}
                                 </Typography>
+                                </Box>
                             </Box>
                             <Box sx={{textAlign: 'right'}}>
                                 {op.income && parseFloat(op.income) > 0 && (

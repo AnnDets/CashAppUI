@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {
     Alert,
+    Avatar,
     Box,
     Button,
     Card,
@@ -18,6 +19,7 @@ import {
 } from '@mui/material';
 import {Add as AddIcon, Close as CloseIcon, Delete as DeleteIcon, FilterList as FilterIcon,} from '@mui/icons-material';
 import {ListOperation, OperationFilterDTO, OperationType} from '../../models/Operation';
+import {colorToHex} from '../../models/Config';
 import {deleteOperation, filterOperations, getOperations} from '../../service/api/operationApi';
 import {format, parseISO} from 'date-fns';
 
@@ -174,6 +176,21 @@ export const OperationList: React.FC = () => {
                                 }}>
                                     <Box sx={{flex: 1, minWidth: 0}}>
                                         <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
+                                            <Avatar
+                                                sx={{
+                                                    bgcolor: op.category?.color ? colorToHex(op.category.color) : 'grey.400',
+                                                    width: 32,
+                                                    height: 32,
+                                                }}
+                                            >
+                                                {op.category?.icon?.data ? (
+                                                    <img src={op.category.icon.data} alt="" width={18} height={18}/>
+                                                ) : (
+                                                    <Typography variant="caption" sx={{color: 'white'}}>
+                                                        {(op.category?.name || '?').charAt(0).toUpperCase()}
+                                                    </Typography>
+                                                )}
+                                            </Avatar>
                                             <Typography variant="body2" fontWeight="medium" noWrap>
                                                 {op.category?.name || 'No category'}
                                             </Typography>
