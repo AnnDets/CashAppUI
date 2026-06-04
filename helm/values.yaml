@@ -1,0 +1,47 @@
+replicaCount: 1
+fullnameOverride: cash-app-ui
+image:
+  repository: registry.gitlab.com/storksoft-ext/cash-app-ui
+  pullPolicy: Always
+  tag: latest
+imagePullSecrets:
+  - name: gitlab-registry
+containerPort: 80
+service:
+  type: ClusterIP
+  # preserve the live service name (the ingress backend references it)
+  name: cash-app-ui-service
+  port: 8080
+# nginx static SPA: TCP probes on the http port.
+readinessProbe:
+  tcpSocket:
+    port: 80
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
+livenessProbe:
+  tcpSocket:
+    port: 80
+  initialDelaySeconds: 15
+  periodSeconds: 30
+  timeoutSeconds: 5
+resources:
+  limits:
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+# env: filled at deploy time from the env overlay vars: block (injected as .Values.env)
+env: {}
+extraEnv: []
+ingress:
+  enabled: true
+  name: cash-app-ui-ingress
+  className: nginx
+  rules:
+    - host: cash-app-ui.storksoft.by
+      paths:
+        - path: /
+          pathType: Prefix
+          serviceName: cash-app-ui-service
+          servicePort: 8080
